@@ -36,6 +36,7 @@ const createTransaction = (itemName, itemPrice) => {
     credit_card: {
       secure: true,
     },
+    // TODO: If You're using on production, must include details here
     customer_details: {
       first_name: "john",
       last_name: "doe",
