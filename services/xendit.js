@@ -13,8 +13,13 @@ const createInvoice = async (itemName, itemPrice) => {
   const invoice = new Invoice(invoiceSpecificOptions);
 
   // TODO: Need to Fix this
+  const externalId = `${itemName
+    .toLowerCase()
+    .split(" ")
+    .join("-")}-${uuidv4()}`;
+
   let invoiceParameter = {
-    externalID: `${itemName.toLowerCase().split(" ").join("-")}-${uuidv4()}`,
+    externalID: externalId,
     amount: itemPrice,
     description: "Invoice Demo #123",
     currency: "IDR",
@@ -24,10 +29,8 @@ const createInvoice = async (itemName, itemPrice) => {
       email: "john.doe@unknown.com",
       mobileNumber: "+6281234567890",
     },
-    successRedirectURL:
-      "http://localhost:3000/v1/payment/xendit/payment/success",
-    failureRedirectURL:
-      "http://localhost:3000/v1/payment/xendit/payment/failure",
+    successRedirectURL: `http://localhost:5173?external_id=${externalId}`,
+    failureRedirectURL: "http://localhost:5173?failure=true",
   };
 
   return invoice.createInvoice(invoiceParameter);
